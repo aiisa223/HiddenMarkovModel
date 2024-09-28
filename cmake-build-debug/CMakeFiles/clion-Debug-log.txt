@@ -1,0 +1,7 @@
+"C:\Program Files\JetBrains\CLion 2023.1.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2023.1.3/bin/ninja/win/x64/ninja.exe" -DCMAKE_PREFIX_PATH=C:\Users\aiisa\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pybind11 -G Ninja -S C:\Users\aiisa\CLionProjects\Markov -B C:\Users\aiisa\CLionProjects\Markov\cmake-build-debug
+-- pybind11::lto disabled (problems with undefined symbols for MinGW for now)
+-- pybind11::thin_lto disabled (problems with undefined symbols for MinGW for now)
+-- Found pybind11: C:/Users/aiisa/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0/LocalCache/local-packages/Python311/site-packages/pybind11/include (found version "2.13.6")
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/aiisa/CLionProjects/Markov/cmake-build-debug

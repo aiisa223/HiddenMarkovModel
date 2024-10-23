@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <random>
-#include "stock_hmm.cpp"  // or "stock_hmm.h" if you've separated the declaration and implementation
+#include "stock_hmm.cpp"  
 
 int main() {
-    // Create a 4-state HMM
+    // make a 4-state HMM
     StockHMM hmm(4);
 
-    // Generate some random return data for testing
+    // make some random return data for testing
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<> dis(0.001, 0.02);

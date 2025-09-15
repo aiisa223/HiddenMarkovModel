@@ -16,18 +16,18 @@ int main() {
         ret = dis(gen);
     }
 
-    // Train the model
+   
     hmm.baum_welch(returns);
 
-    // Make a prediction
+    
     double next_return = hmm.predict_next_return();
     std::cout << "Predicted next return: " << next_return << std::endl;
 
-    // Get trading signal
+   
     std::string signal = hmm.get_trading_signal();
     std::cout << "Trading signal: " << signal << std::endl;
 
-    // Calculate model selection criteria
+    
     std::vector<int> discretized_returns = hmm.discretize_returns(returns);
     double log_likelihood = 0;
     for (const auto& alpha : hmm.forward(discretized_returns)) {
@@ -42,4 +42,5 @@ int main() {
     std::cout << "AIC: " << aic << ", BIC: " << bic << ", HQC: " << hqc << ", CAIC: " << caic << std::endl;
 
     return 0;
+
 }

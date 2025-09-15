@@ -24,7 +24,7 @@ private:
     std::vector<double> mean_returns;
     std::vector<double> std_returns;
 
-    // Helper function for log-sum-exp trick
+    // log sum exp function helper thing
     double logsumexp(const std::vector<double>& vec) const {
         double max_val = *std::max_element(vec.begin(), vec.end());
         double sum = 0.0;
@@ -40,13 +40,13 @@ public:
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis(0.0, 1.0);
 
-        // Initialize probabilities and parameters
+        // starts probabilities 
         initial_probs.resize(num_states);
         transition_probs.resize(num_states, std::vector<double>(num_states));
         mean_returns.resize(num_states);
         std_returns.resize(num_states);
 
-        // Random initialization
+        // random initialization
         for (int i = 0; i < num_states; ++i) {
             initial_probs[i] = dis(gen);
             mean_returns[i] = dis(gen) * 0.02 - 0.01;  // Random mean between -1% and 1%
@@ -56,7 +56,7 @@ public:
             }
         }
 
-        // Normalize probabilities
+        // normalizes the probabilities
         double sum_initial = std::accumulate(initial_probs.begin(), initial_probs.end(), 0.0);
         for (int i = 0; i < num_states; ++i) {
             initial_probs[i] /= sum_initial;
@@ -72,10 +72,10 @@ public:
         double prev_log_likelihood = -std::numeric_limits<double>::infinity();
 
         for (int iteration = 0; iteration < max_iterations; ++iteration) {
-            // Forward-Backward algorithm
+            // fw-back algorithm
             auto [alpha, beta, log_likelihood] = forward_backward(returns);
 
-            // Compute gamma and xi
+            // compute gamma and xi
             std::vector<std::vector<double>> gamma(T, std::vector<double>(num_states));
             std::vector<std::vector<std::vector<double>>> xi(T-1, std::vector<std::vector<double>>(num_states, std::vector<double>(num_states)));
 
@@ -93,7 +93,7 @@ public:
                 }
             }
 
-            // Update parameters
+            // udpate parameters
             for (int i = 0; i < num_states; ++i) {
                 initial_probs[i] = gamma[0][i];
 
@@ -118,7 +118,7 @@ public:
                 std_returns[i] = std::sqrt(sum_squared_returns / sum_gamma - mean_returns[i] * mean_returns[i]);
             }
 
-            // Check for convergence
+            // checking for convergence
             if (std::abs(log_likelihood - prev_log_likelihood) < tolerance) {
                 break;
             }
@@ -132,7 +132,7 @@ public:
         std::vector<std::vector<double>> alpha(T, std::vector<double>(num_states));
         std::vector<std::vector<double>> beta(T, std::vector<double>(num_states, 0.0));
 
-        // Forward pass
+        // fwd pass
         for (int i = 0; i < num_states; ++i) {
             alpha[0][i] = std::log(initial_probs[i]) +
                           std::log(std::exp(-0.5 * std::pow((observations[0] - mean_returns[i]) / std_returns[i], 2)) /
@@ -150,7 +150,7 @@ public:
             }
         }
 
-        // Backward pass
+        // bwd pass
         for (int t = T - 2; t >= 0; --t) {
             for (int i = 0; i < num_states; ++i) {
                 std::vector<double> temp(num_states);
